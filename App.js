@@ -1,9 +1,8 @@
 'use strict'
-import { ThemeProvider } from '@react-navigation/native';
 import React, { Component } from 'react'
 import {StyleSheet, View, Text, Button, TextInput} from 'react-native'
 import 'react-native-gesture-handler';
-import { block } from 'react-native-reanimated';
+import vibrate from './utils/vibrate';
 
 const styles = StyleSheet.create({
   description: {
@@ -28,37 +27,98 @@ const styles = StyleSheet.create({
 });
 
 export default class App extends Component {
-  state = {
-    start_pause: false,
-    reset: "Reset",
-  };
+  constructor(props) {
+    super(props)
+    this.state = {
+      start_pause: true,
+      minutes: 2,
+      seconds: 0, 
+    };    
+  }
 
+  componentDidMount() {
+      this.myInterval = setInterval(() => {
+        const { seconds, minutes } = this.state;
+        if (seconds > 0) {
+          this.setState(({ seconds }) => ({
+            seconds: this.state.start_pause ? seconds : seconds - 1,
+          }));
+        }
+        if (seconds === 0) {
+          if (minutes === 0) {
+            clearInterval(this.myInterval);
+          } else {
+            this.setState(({ minutes }) => ({
+              minutes: this.state.start_pause ? minutes : minutes - 1,
+              seconds: this.state.start_pause ? seconds : 59,
+            }));
+          }
+        }
+      }, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.myInterval)
+  }
 
   render() {
-    const { start_pause} = this.state
-
+    const { minutes, seconds, start_pause } = this.state;    
+    let init_min, init_sec; 
     return (
       <View style={styles.description}>
         <Text style={styles.font}>Work Timer</Text>
-        <Text style={styles.font}>Time here</Text>
+        <Text style={styles.font}>{`${
+          minutes < 10 ? `0${minutes}` : `${minutes}`
+        }:${seconds < 10 ? `0${seconds}` : `${seconds}`}`}</Text>
+
         <View style={styles.row}>
           <Button
             title={`${start_pause ? "Start" : "Pause"}`}
-            onPress={() => this.setState({ start_pause: !start_pause })}
+            onPress={() => {
+              this.setState({ start_pause: !start_pause });
+            }}
           />
-          <Button title="Reset" />
+          <Button
+            title="Reset"
+            onPress={() =>
+              this.setState({ start_pause: true, minutes: value, seconds: value})
+            }
+          />
         </View>
         <View style={styles.row}>
-          <Text>Work Time:      </Text>
-          <TextInput style={styles.input} keyboardType="numeric" placeholder={"Mins:"} />
-          <TextInput style={styles.input} keyboardType="numeric" placeholder={"Secs:"} />
+          <Text>Work Time: </Text>
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            value={minutes}
+            onChangeText={(minutes) => this.setState({ minutes })}
+            placeholder={"Mins:"}
+          />
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            value={seconds}
+            onChangeText={(seconds) => this.setState({ seconds })}
+            placeholder={"Secs:"}
+          />
         </View>
         <View style={styles.row}>
-          <Text>Break Time:      </Text>
-          <TextInput style={styles.input} keyboardType="numeric" placeholder={"Mins:"} />
-          <TextInput style={styles.input} keyboardType="numeric" placeholder={"Secs:"} />
+          <Text>Break Time: </Text>
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            placeholder={"Mins:"}
+          />
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            placeholder={"Secs:"}
+          />
         </View>
       </View>
     );
   }
 }
+
+
+// vibrate()
