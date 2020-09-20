@@ -33,6 +33,8 @@ export default class App extends Component {
       start_pause: true,
       minutes: 2,
       seconds: 0, 
+      init_w_m: 0,
+      init_w_s: 0,
     };    
   }
 
@@ -62,8 +64,8 @@ export default class App extends Component {
   }
 
   render() {
-    const { minutes, seconds, start_pause } = this.state;    
-    let init_min, init_sec; 
+    const { minutes, seconds, start_pause, init_w_m, init_w_s } = this.state;    
+
     return (
       <View style={styles.description}>
         <Text style={styles.font}>Work Timer</Text>
@@ -81,7 +83,11 @@ export default class App extends Component {
           <Button
             title="Reset"
             onPress={() =>
-              this.setState({ start_pause: true, minutes: value, seconds: value})
+              this.setState({
+                start_pause: true,
+                minutes: init_w_m,
+                seconds: init_w_s,
+              })
             }
           />
         </View>
@@ -90,15 +96,21 @@ export default class App extends Component {
           <TextInput
             style={styles.input}
             keyboardType="numeric"
+            returnKeyType="done"
             value={minutes}
-            onChangeText={(minutes) => this.setState({ minutes })}
+            onChangeText={(minutes, init_w_m) =>
+              this.setState({ minutes, init_w_m: minutes })
+            }
             placeholder={"Mins:"}
           />
           <TextInput
             style={styles.input}
             keyboardType="numeric"
+            returnKeyType="done"
             value={seconds}
-            onChangeText={(seconds) => this.setState({ seconds })}
+            onChangeText={(seconds, init_w_s) =>
+              this.setState({ seconds, init_w_s: seconds })
+            }
             placeholder={"Secs:"}
           />
         </View>
