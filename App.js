@@ -59,12 +59,9 @@ export default class App extends React.Component {
             if(event) {
               this.setSec(b_seconds);
               this.setMin(b_minutes);
-              // this.setState({event: !event})
             }else {
-              vibrate()
               this.setSec(this.state.SEC)
               this.setMin(this.state.MIN)
-              // this.setState({event: !event})
             }
         } else {
           this.setState(({ minutes }) => ({
@@ -159,5 +156,3 @@ export default class App extends React.Component {
     );
   }
 }
-
-// vibrate()
