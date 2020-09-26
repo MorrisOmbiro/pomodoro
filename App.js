@@ -1,6 +1,6 @@
 "use strict";
 import React, { Component } from "react";
-import { StyleSheet, View, Text, Button, TextInput } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, TextInput } from "react-native";
 import "react-native-gesture-handler";
 import Constants from "expo-constants";
 import vibrate from "./utils/vibrate";
@@ -11,21 +11,34 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingTop: Constants.statusBarHeight,
-    backgroundColor: "#ecf0f1",
+    backgroundColor: "#FF403F",
   },
   font: {
     fontSize: 48,
+    color: '#F8F8F8',
+    fontFamily: 'ArialHebrew-Light'
   },
   input: {
     margin: 15,
     height: 40,
-    borderColor: "#7a42f4",
+    borderColor: "#353533",
     borderWidth: 1,
     borderRadius: 5,
   },
   row: {
     flexDirection: "row",
-  },
+  },coolButton: {
+    flex: 1,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    backgroundColor: '#FF403F',
+    borderRadius: 5, 
+    borderWidth: 1, 
+    borderColor: '#fff',
+    marginLeft: 5,
+    marginRight: 5,
+    padding: 30,
+  }, 
 });
 
 export default class App extends React.Component {
@@ -137,12 +150,12 @@ export default class App extends React.Component {
           ></TextInput>
         </View>
         <View style={styles.row}>
-          <Button
+          <TouchableOpacity
+            style={styles.coolButton}
             onPress={this.setPause}
-            title={`${start_pause ? "start" : "Pause"}`}
-          />
-          <Button
-            title="Reset"
+            ><Text>{`${start_pause ? "START" : "PAUSE"}`}</Text></TouchableOpacity>
+          <TouchableOpacity
+            style={styles.coolButton}
             onPress={() =>
               this.setState({
                 start_pause: true,
@@ -150,7 +163,7 @@ export default class App extends React.Component {
                 seconds: this.state.SEC,
               })
             }
-          />
+          ><Text>RESET</Text></TouchableOpacity>
         </View>
       </View>
     );
