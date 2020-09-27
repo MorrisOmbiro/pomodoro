@@ -74,9 +74,13 @@ export default class App extends React.Component {
               this.setState({event: !event})
             }
             if(event) {
+              if(!start_pause)
+                vibrate()
               this.setSec(b_seconds);
               this.setMin(b_minutes);
             }else {
+              if(!start_pause)
+                vibrate()
               this.setSec(this.state.SEC)
               this.setMin(this.state.MIN)
             }
@@ -118,6 +122,7 @@ export default class App extends React.Component {
           <TextInput
             style={styles.input}
             keyBoardType="numeric"
+            maxLength = {2}
             placeholder="Minutes"
             onChangeText={(minutes, MIN) => {
               this.setState({ minutes, MIN: minutes });
@@ -126,6 +131,7 @@ export default class App extends React.Component {
           <TextInput
             style={styles.input}
             keyBoardType="numeric"
+            maxLength = {2}
             placeholder="Seconds"
             onChangeText={(seconds, SEC) => {
               this.setState({ seconds, SEC: seconds });
@@ -136,13 +142,15 @@ export default class App extends React.Component {
           <Text style={styles.font}>Break: </Text>
           <TextInput
             style={styles.input}
-            keyBoardType="numeric"
+            keyBoardType={'phone-pad'}
+            maxLength = {2}
             placeholder="Minutes"
             onChangeText={(b_minutes) => {this.setState({b_minutes, MIN_B: b_minutes})}}
           ></TextInput>
           <TextInput
             style={styles.input}
             keyBoardType="numeric"
+            maxLength = {2}
             placeholder="Seconds"
             onChangeText={(b_seconds) => {this.setState({b_seconds, SEC_B: b_seconds})}}
           ></TextInput>
