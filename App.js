@@ -17,7 +17,9 @@ const styles = StyleSheet.create({
     fontSize: 48,
     color: '#F8F8F8',
     fontFamily: 'ArialHebrew-Light'
-  },
+  },font2: {
+    fontSize: 100,
+  }, 
   input: {
     margin: 15,
     height: 40,
@@ -32,7 +34,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     alignItems: 'center',
     backgroundColor: '#FF403F',
-    borderRadius: 5, 
+    borderRadius: 50, 
     borderWidth: 1, 
     borderColor: '#fff',
     marginLeft: 5,
@@ -51,6 +53,8 @@ export default class App extends React.Component {
       b_minutes: 0, 
       SEC: 0, 
       MIN: 0, 
+      MIN_B: 0,
+      SEC_B: 0,
       event: true,
       start_pause: true,
     };
@@ -96,23 +100,17 @@ export default class App extends React.Component {
   setSec = (sec_input) => {
     this.setState({ seconds: sec_input });
   };
-  setBMin = (min_input) => {
-    this.setState({ b_minutes: min_input });
-  };
-  setBSec = (sec_input) => {
-    this.setState({ b_seconds: sec_input });
-  };
   setPause = () => {
     this.setState({ start_pause: !this.state.start_pause });
   };
   render() {
-    const { seconds, minutes, start_pause, event } = this.state;
+    const { seconds, minutes, start_pause, event, MIN_B, SEC_B } = this.state;
     return (
       <View style={styles.container}>
         <Text style={styles.font}>{`${
           event ? "Work Time" : "Break Time"
         }`}</Text>
-        <Text style={styles.font}>{`${
+        <Text style={styles.font2}>{`${
           minutes < 10 ? `0${minutes}` : `${minutes}`
         }:${seconds < 10 ? `0${seconds}` : `${seconds}`}`}</Text>
         <View style={styles.row}>
@@ -140,13 +138,13 @@ export default class App extends React.Component {
             style={styles.input}
             keyBoardType="numeric"
             placeholder="Minutes"
-            onChangeText={this.setBMin}
+            onChangeText={(b_minutes) => {this.setState({b_minutes, MIN_B: b_minutes})}}
           ></TextInput>
           <TextInput
             style={styles.input}
             keyBoardType="numeric"
             placeholder="Seconds"
-            onChangeText={this.setBSec}
+            onChangeText={(b_seconds) => {this.setState({b_seconds, SEC_B: b_seconds})}}
           ></TextInput>
         </View>
         <View style={styles.row}>
@@ -159,8 +157,8 @@ export default class App extends React.Component {
             onPress={() =>
               this.setState({
                 start_pause: true,
-                minutes: this.state.MIN,
-                seconds: this.state.SEC,
+                minutes: event ? this.state.MIN : MIN_B,
+                seconds: event ? this.state.SEC : SEC_B,
               })
             }
           ><Text>RESET</Text></TouchableOpacity>
