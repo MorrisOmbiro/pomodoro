@@ -3,7 +3,8 @@ This timer will help
 people trying to use the [Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro_Technique).
 It will vibrate to tell you when to take breaks or resume working, based on some
 determined values.
-
+![work](https://github.com/MorrisOmbiro/pomodoro/blob/master/pom1.PNG)
+![break](https://github.com/MorrisOmbiro/pomodoro/blob/master/pom2.PNG)
 ## Requirements
 - Only libraries being used:
   - `expo`
@@ -20,5 +21,4 @@ determined values.
 - It should allow the user to input any arbitrary time for the timers (e.g. 5 mins of work time and 5 mins of break)
 
 
-![work](http://url/to/img.png)
-![break](http://url/to/img.png)
+
