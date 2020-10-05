@@ -20,6 +20,5 @@ determined values.
 - It should allow the user to input any arbitrary time for the timers (e.g. 5 mins of work time and 5 mins of break)
 
 
-## Staff Solution
-If you want to play with the staff implementation, you can view it using
-Snack at [@jhhayashi/project1-solution](https://snack.expo.io/@jhhayashi/project1-solution).
+![work](http://url/to/img.png)
+![break](http://url/to/img.png)
